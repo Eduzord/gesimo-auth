@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+
+}
+
+model Role {
+  id       Int       @id @default(autoincrement()) @map("id_role")
+  role     String    @db.VarChar(50)
+  
+  usuarios Usuario[] // Relacionamento com Usuário
+
+  @@map("Roles") // Nome exato da tabela no banco
+}
+
+model Usuario {
+  id         Int    @id @default(autoincrement()) @map("id_usuario")
+  nome       String @db.VarChar(150)
+  email      String @unique(map: "uk_usuario_email") @db.VarChar(255)
+  senha_hash String @db.VarChar(255)
+  status     Int    @default(1) @db.TinyInt
+  
+  // Chave estrangeira
+  id_role    Int    
+
+  // Relação Prisma
+  role       Role   @relation(fields: [id_role], references: [id])
+
+  @@map("Usuario") // Nome exato da tabela no banco
+}
