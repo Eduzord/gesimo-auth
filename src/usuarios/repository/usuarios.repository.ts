@@ -26,7 +26,8 @@ export class UsuariosRepository {
   // BÔNUS: Já estou deixando esse método pronto para usarmos no Login (Auth)
   async findByEmail(email: string) {
     return this.prisma.usuario.findUnique({
-      where: { email }
+      where: { email },
+      include: { role: true }
     });
   }
 

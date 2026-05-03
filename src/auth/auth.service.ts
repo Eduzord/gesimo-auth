@@ -25,7 +25,11 @@ async login(loginDto: LoginDto) {
         throw new UnauthorizedException('E-mail ou senha inválidos.');
     }
 
-    const payload = { sub: usuario.id, email: usuario.email, role_id: usuario.id_role };
+    const payload = { 
+        sub: usuario.id, 
+        email: usuario.email, 
+        role: usuario.role.role // Já que o findByEmail inclui a role, podemos acessar diretamente aqui
+    };
 
     return {
         access_token: this.jwtService.sign(payload),
