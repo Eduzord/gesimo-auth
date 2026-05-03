@@ -56,6 +56,11 @@ export class UsuariosService {
     return usuarioSemSenha;
   }
 
+  async findByEmail(email: string) {
+    const usuario = await this.usuariosRepository.findByEmail(email);
+    return usuario; // Aqui é importante retornar o usuário completo, incluindo o senha_hash, para que o AuthService possa comparar a senha durante o login.
+  }
+
   // Aqui eu creio que podemos usar o mesmo método de update tanto para atualizar os dados de um usuário quanto para alterar a senha dele, como todas as propriedades do UpdateUsuarioDto são opcionais, o front-end pode escolher se está tratando de uma solicitação de atualização de dados ou de senha.
   async update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
     // Garante que se não mandarem nenhum body, bloqueia a requisição
