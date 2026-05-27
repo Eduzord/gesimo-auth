@@ -93,4 +93,12 @@ export class UsuariosService {
   async remove(id: number) {
     return this.usuariosRepository.remove(id);
   }
+
+  async reinstate(id: number) {
+    return this.usuariosRepository.update(id, { status: 1 });
+  }
+
+  async removePerm(id: number) {
+    return this.usuariosRepository.removePerm(id);
+  }
 }

@@ -29,7 +29,17 @@ export class RolesService {
   }
 
   async remove(id: number) {
-    await this.findOne(id); // Garante que existe antes de deletar
+    await this.findOne(id); // Garante que existe antes de atualizar
     return this.rolesRepository.remove(id);
+  }
+
+  async reinstate(id: number) {
+    await this.findOne(id); // Garante que existe antes de atualizar
+    return this.rolesRepository.update(id, { status: 1 });
+  }
+
+  async removePerm(id: number) {
+    await this.findOne(id); // Garante que existe antes de deletar
+    return this.rolesRepository.removePerm(id);
   }
 }

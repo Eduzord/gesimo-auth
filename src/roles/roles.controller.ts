@@ -33,8 +33,19 @@ export class RolesController {
     return this.rolesService.update(+id, updateRoleDto); // Converte para número
   }
 
+  @Patch(':id/reativar')
+  async reinstate(@Param('id') id: string) {
+    return this.rolesService.reinstate(+id); // Converte para número
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.rolesService.remove(+id); // Converte para número
+  }
+
+  
+  @Delete(':id/permanente')
+  removePerm(@Param('id') id: string) {
+    return this.rolesService.removePerm(+id); // Converte para número
   }
 }

@@ -39,6 +39,12 @@ export class UsuariosRepository {
   }
 
   async remove(id: number) {
+    return this.prisma.usuario.update({
+      where: { id },
+      data: { status: 0 },
+    });
+  }
+  async removePerm(id: number) {
     return this.prisma.usuario.delete({
       where: { id },
     });

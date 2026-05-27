@@ -4,7 +4,7 @@ import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class RolesRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async create(data: Prisma.RoleCreateInput) {
     return this.prisma.role.create({ data });
@@ -26,8 +26,14 @@ export class RolesRepository {
       data,
     });
   }
-
+  //Soft delete
   async remove(id: number) {
+    return this.prisma.role.update({
+      where: { id },
+      data: { status: 0 },
+    });
+  }
+  async removePerm(id: number) {
     return this.prisma.role.delete({
       where: { id },
     });
