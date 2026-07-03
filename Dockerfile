@@ -19,19 +19,28 @@ COPY prisma ./prisma/
 COPY prisma.config.ts ./
 
 # Adicione esta linha para satisfazer a validação do prisma.config.ts durante o build
-ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
+# (Ajustado para mysql para refletir o seu banco real)
+ENV DATABASE_URL="mysql://dummy:dummy@localhost:3306/dummy"
 
 # Gera o Prisma Client
 RUN npx prisma generate
 
-# Copia todo o restante do código fonte do gateway
+# Copia todo o restante do código fonte do projeto
 COPY . .
+
+# ---------------------------------------------------
+# PASSO DE PRODUÇÃO 1: Compilar o código TypeScript
+# Isso vai gerar a pasta 'dist' contendo o JavaScript otimizado
+# ---------------------------------------------------
+RUN npm run build
 
 # Define as variáveis de ambiente (podem ser sobrescritas via docker-compose ou runtime)
 
-
-# Expõe a porta definida para o gateway
+# Expõe a porta definida para a API
 EXPOSE 3000
 
-# Comando para iniciar a aplicação em modo de desenvolvimento (com hot-reload)
-CMD ["npm", "run", "start:dev"]
+# ---------------------------------------------------
+# PASSO DE PRODUÇÃO 2: Rodar o JavaScript puro
+# Mais rápido, mais seguro e consome menos memória RAM
+# ---------------------------------------------------
+CMD ["node", "dist/main"]
