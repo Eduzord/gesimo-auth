@@ -6,7 +6,10 @@ import { AuthGuard } from '@nestjs/passport/dist/auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { Role as RoleEnum } from '../auth/roles.enum';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiTags('roles')
+@ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'), RolesGuard) // Protege esta rota para que apenas usuários autenticados com a role ADMIN possam acessá-la
 @Roles(RoleEnum.ADMIN) // Define que esta rota só pode ser acessada por usuários com a role ADMIN
 @Controller('roles')
@@ -14,11 +17,13 @@ export class RolesController {
   constructor(private readonly rolesService: RolesService) { }
 
   @Post()
+  @ApiOperation({ summary: 'Criar uma nova role' })
   create(@Body() createRoleDto: CreateRoleDto) {
     return this.rolesService.create(createRoleDto);
   }
 
   @Get()
+  @ApiOperation({ summary: 'Listar todas as roles' })
   findAll() {
     return this.rolesService.findAll();
   }

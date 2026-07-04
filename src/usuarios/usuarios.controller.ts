@@ -7,18 +7,23 @@ import { Role } from '../roles/entities/role.entity';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { Role as RoleEnum } from '../auth/roles.enum';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiTags('usuarios')
 @Controller('usuarios')
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
 
   @Post()
+  @ApiOperation({ summary: 'Criar um novo usuário' })
   create(@Body() createUsuarioDto: CreateUsuarioDto) {
     return this.usuariosService.create(createUsuarioDto);
   }
 
   @UseGuards(AuthGuard('jwt')) // Protege esta rota para que apenas usuários autenticados possam acessá-la
+  @ApiBearerAuth()
   @Get()
+  @ApiOperation({ summary: 'Listar todos os usuários' })
   findAll() {
     return this.usuariosService.findAll();
   }
