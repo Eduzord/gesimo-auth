@@ -33,6 +33,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     // Retorna os dados frescos diretamente do banco, ignorando a role velha que estava no token
     return { 
       userId: usuarioBanco.id, 
+      nome: usuarioBanco.nome,
       email: usuarioBanco.email, 
       // Pegamos a role fresquinha do banco:
       role: usuarioBanco.role?.role 

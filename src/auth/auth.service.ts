@@ -27,6 +27,7 @@ async login(loginDto: LoginDto) {
 
     const payload = { 
         sub: usuario.id, 
+        nome: usuario.nome,
         email: usuario.email, 
         role: usuario.role.role // Já que o findByEmail inclui a role, podemos acessar diretamente aqui
     };
