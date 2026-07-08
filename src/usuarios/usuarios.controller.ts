@@ -49,7 +49,7 @@ export class UsuariosController {
 
   @UseGuards(AuthGuard('jwt'), RolesGuard) // Protege esta rota para que apenas usuários autenticados com a role ADMIN possam acessá-la
   @Roles(RoleEnum.ADMIN) // Define que esta rota só pode ser acessada por usuários com a role ADMIN
-  @Delete(':id/permanente')
+  @Delete(':id/hard')
   removePerm(@Param('id') id: string) {
     return this.usuariosService.removePerm(+id);
   }
