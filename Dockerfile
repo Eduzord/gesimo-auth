@@ -11,12 +11,12 @@ WORKDIR /usr/src/app
 # Isso otimiza o cache do Docker, evitando reinstalar pacotes se o código mudar, mas as dependências não
 COPY package.json package-lock.json ./
 
-# Instala as dependências via npm
-RUN npm install
-
 # Copia o schema do Prisma e o arquivo de configuração
 COPY prisma ./prisma/
 COPY prisma.config.ts ./
+
+# Instala as dependências via npm
+RUN npm install
 
 # Adicione esta linha para satisfazer a validação do prisma.config.ts durante o build
 # (Ajustado para mysql para refletir o seu banco real)
@@ -43,4 +43,4 @@ EXPOSE 3000
 # PASSO DE PRODUÇÃO 2: Rodar o JavaScript puro
 # Mais rápido, mais seguro e consome menos memória RAM
 # ---------------------------------------------------
-CMD ["node", "dist/main"]
+CMD ["node", "dist/src/main"]
